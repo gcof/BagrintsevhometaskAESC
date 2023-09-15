@@ -1,84 +1,69 @@
 def prod_non_zero_diag(x):
-    """Compute product of nonzero elements from matrix diagonal.
+    n = min(len(x), len(x[0]))
+    res = 1
+    for i in range(n):
+        if x[i][i] != 0:
+            res *= x[i][i]
 
-    input:
-    x -- 2-d numpy array
-    output:
-    product -- integer number
-
-
-    Not vectorized implementation.
-    """
-
-    pass
+    return res 
 
 
 def are_multisets_equal(x, y):
-    """Return True if both vectors create equal multisets.
+    x.sort()
+    y.sort()
+    if len(x) != len(y): return False
+    for i in range(len(x)):
+        if x[i] != y[i]: return False
+    return True
 
-    input:
-    x, y -- 1-d numpy arrays
-    output:
-    True if multisets are equal, False otherwise -- boolean
-
-    Not vectorized implementation.
-    """
-
-    pass
 
 
 def max_after_zero(x):
-    """Find max element after zero in array.
+    maxi = -1e9
+    for i in range(1, len(x)):
+        if (x[i - 1] == 0 and x[i] > maxi): 
+            maxi = x[i]
+    if (maxi == -1e9):
+        maxi = x[0]
+    return maxi
 
-    input:
-    x -- 1-d numpy array
-    output:
-    maximum element after zero -- integer number
-
-    Not vectorized implementation.
-    """
-
-    pass
 
 
 def convert_image(img, coefs):
-    """Sum up image channels with weights from coefs array
+    a = [[0] * len(img[0]) for y in range(len(img))]
+    for i in range(len(img)):
+        for j in range(len(img[0])):
+            for k in range(3):
+                t1 = img[i][j][k]
+                t2 = coefs[k]
+                a[i][j] += t1 * t2
 
-    input:
-    img -- 3-d numpy array (H x W x 3)
-    coefs -- 1-d numpy array (length 3)
-    output:
-    img -- 2-d numpy array
-
-    Not vectorized implementation.
-    """
-
-    pass
+    return a
 
 
 def run_length_encoding(x):
-    """Make run-length encoding.
-
-    input:
-    x -- 1-d numpy array
-    output:
-    elements, counters -- integer iterables
-
-    Not vectorized implementation.
-    """
-
-    pass
+    i = 0
+    a = []
+    b = []
+    while (i < len(x)):
+        count = 1
+        tmp = x[i]
+        j = i
+        while (j < len(x) - 1):
+            if (x[j] == x[j+1]):
+                count += 1
+                j += 1
+            else:
+                break
+        a.append(tmp)
+        b.append(count)
+        i = j + 1
+    return a, b
 
 
 def pairwise_distance(x, y):
-    """Return pairwise object distance.
-
-    input:
-    x, y -- 2d numpy arrays
-    output:
-    distance array -- 2d numpy array
-
-    Not vectorized implementation.
-    """
-
-    pass
+    m = [[0] * len(y) for _ in range(len(x))]
+    for i in range(len(x)):
+        for j in range(len(y)):
+            m[i][j] = ((x[i][0] - y[j][0]) ** 2 + (x[i][1] - y[j][1]) ** 2) ** 0.5
+    return m
